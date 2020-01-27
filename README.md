@@ -1,6 +1,8 @@
 MessageModBot,
 a message/action logger + manual moderation bot
 
+BOT:
+MessageModBot#1732
 
 MessageModBot is a sideproject made for server moderation. 
 
