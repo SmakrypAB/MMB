@@ -1,3 +1,4 @@
+// DEFAULT DISCORD ROLE COLORS
 {
     "blue-green": "#1abc9c",
     "dark-blue-green": "#11806a",
@@ -5,18 +6,18 @@
     "dark-green":"#f8b4c",
     "bright-blue":"#3498db",
     "dark-blue":"#206694",
-    "purple":"#",
+    "purple":"#9b59b6",
     "dark-purple":"#71368a",
-    "pink":"#",
+    "pink":"#e91e63",
     "dark-pink":"#ad1457",
-    "yellow":"#",
-    "gold":"#",
-    "orange":"#",
-    "dark-orange":"#",
-    "red":"#",
-    "dark-red":"#",
-    "bright-grey":"#",
-    "white":"#",
-    "grey":"#",
-    "dark-grey":"#"
+    "yellow":"#f1c40f",
+    "gold":"c27c0e",
+    "orange":"#e67e22",
+    "dark-orange":"#a84300",
+    "red":"#e74c3c",
+    "dark-red":"#992d22",
+    "bright-grey":"#95a5a6",
+    "white":"#979c9f",
+    "grey":"#607d8b",
+    "dark-grey":"#546e7a"
 }
