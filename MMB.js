@@ -324,4 +324,4 @@ const vaccinated = [
   "vaccinated and ready!"
 ]
 
-client.login(`NjcwMzIzMzg0MDg4OTIwMTA0.Xiw2DQ.ZH7NpFfoZn1soIL-HcrzPJu_AMk`);
+client.login(`TOKEN`);
