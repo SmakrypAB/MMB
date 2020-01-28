@@ -1,8 +1,16 @@
 const Discord = require("discord.js");
 const client = new Discord.Client({ disableEveryone: true });
 const c = require("./DCC.json")
+const t = require("./token.json")
+const fs = require('fs');
+client.commands = new Discord.Collection();
 
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
+for (const file of commandFiles) {
+  const command = require(`./commands/${file}`);
+  client.commands.set(command.name, command);
+}
 
 checkdays:
 function checkDays(date) {
@@ -56,17 +64,21 @@ client.channels.get(`670380179780141057`).send(`${Error}`)
 });
 
 
+setInterval(() => {
+  client.user.setActivity(`${process.uptime(0).toFixed(0)} seconds`);
+}, 5000);
+
 
 startup:
-client.on("ready", () => {
+client.once("ready", () => {
   var cu = client.user
   var d = new Date(2019, 11, 7, 4, 20, 0, 0)
   var now = new Date()
-
-  client.user.setActivity(`for messages`, {type: `WATCHING`})
-  
+    
   const used = process.memoryUsage().heapUsed / 1024 / 1024;
   const total = process.memoryUsage().heapTotal / 1024 / 1024;
+
+client.user.setActivity(`${process.uptime(0).toFixed(0)} second`)  
 
 const startuplog = new Discord.RichEmbed()
 .setColor(`${c.green}`)
@@ -94,7 +106,7 @@ const startuplog = new Discord.RichEmbed()
  ${client.guilds.map(servers => `"${servers.name}", ${servers.memberCount} members, ServerID: ${servers.id}, Owner: ${servers.owner.displayName} (${servers.owner.presence.status})`).join(`\n `)} \n (bot is in ${client.guilds.size} servers, with a total of ${client.users.size} users) 
  ${_logs_} \n
    `);
-  });
+});
 
 
 
@@ -106,43 +118,38 @@ client.on("message", message => {
   var d = new Date(2019, 11, 7, 4, 20, 0, 0)
   var now = new Date()
 
-
-  const used = process.memoryUsage().heapUsed / 1024 / 1024;
-  const total = process.memoryUsage().heapTotal / 1024 / 1024;
-   
-  
-if (message.content.startsWith('invite')) {
-  client.users.get(`${message.guild.fetchMembers.name}`)
-} else
+restart:
+  if (message.channel.id === '670712865891549210') {
+    if (message.content.startsWith(`restart`)) {
+ 
+const used = process.memoryUsage().heapUsed / 1024 / 1024;
+const total = process.memoryUsage().heapTotal / 1024 / 1024;
 
 
-    if (message.channel.id === '670712865891549210') {
-  if (message.content.startsWith(`restart`)) {
+var cu = client.user
   
 
-const killlog = new Discord.RichEmbed()
-.setColor(`#f80006`)
-.setAuthor(`${client.user.username}`, `${client.user.avatarURL}`)
-.setTitle(`MesssageModBot Is now restarting..`)
-.addField(`activity`, `${client.user.presence.game.name}`)
-.addField(`uptime:`, `${process.uptime(0)} seconds`)
-.addField(`memory:`, `used memory: ${Math.round(used * 100) / 100} MB \n out of total memory: ${Math.round(total * 100) / 100} MB`)
-.addField(`process:`, `${process.memoryUsage().heapUsed}`)
-.addField(`killed at:`, `${new Date().toUTCString()}`)
-.addField(`servers`, `${client.guilds.map(servers => `"${servers.name}", ${servers.memberCount} members, ServerID: ${servers.id}, Owner: ${servers.owner.displayName} (${servers.owner.presence.status})`).join(`\n `)} \n (bot is in ${client.guilds.size} servers, with a total of ${client.users.size} users)`)
-.addField(`MessageModBot was created on`, `${cu.createdAt.toLocaleString()} (${checkDays(cu.createdAt)})`)
-.setTimestamp()
-.setFooter(`MessageModBot`);
- client.channels.get('670712865891549210').send(killlog)
- setInterval(() => {
-  (process.kill(process.pid))
- }, 1500); 
-  
-}};
+  const killlog = new Discord.RichEmbed()
+  .setColor(`#f80006`)
+  .setAuthor(`MessageModBot`, `https://cdn.discordapp.com/avatars/670323384088920104/cd7f6816c6a7c56de783ed10f19c17c3.png?size=256`)
+  .setTitle(`MesssageModBot Is now restarting..`)
+  .addField(`activity`, `${client.user.presence.game.name}`)
+  .addField(`uptime:`, `${process.uptime(0)} seconds`)
+  .addField(`memory:`, `used memory: ${Math.round(used * 100) / 100} MB \n out of total memory: ${Math.round(total * 100) / 100} MB`)
+  .addField(`process:`, `${process.memoryUsage().heapUsed}`)
+  .addField(`killed at:`, `${new Date().toUTCString()}`)
+  .addField(`servers`, `${client.guilds.map(servers => `"${servers.name}", ${servers.memberCount} members, ServerID: ${servers.id}, Owner: ${servers.owner.displayName} (${servers.owner.presence.status})`).join(`\n `)} \n (bot is in ${client.guilds.size} servers, with a total of ${client.users.size} users)`)
+  .addField(`MessageModBot was created on`, `${cu.createdAt.toLocaleString()} (${checkDays(cu.createdAt)})`)
+  .setTimestamp()
+  .setFooter(`MessageModBot`, `https://cdn.discordapp.com/avatars/670323384088920104/cd7f6816c6a7c56de783ed10f19c17c3.png?size=256`);
+   client.channels.get('670712865891549210').send(killlog)
+   setInterval(() => {
+    (process.kill(process.pid))
+   }, 1500); 
+    
 
-if (message.content.startsWith("process.debug")) {
-  message.channel.send(`workinprogess`)
-} else
+  }} else  
+    
 
 var game = message.author.presence.game
 var channeltopic = message.channel.topic
@@ -254,57 +261,15 @@ commands:
 client.on('message', message => {
 
   if (message.content.startsWith("b.ping")) {
-    message.channel.send('Pinging...').then(sent => {
-      sent.edit(`${sent.createdTimestamp - message.createdTimestamp}ms`);
-      var msgping = sent.createdTimestamp - message.createdTimestamp
-
-      
-var game = message.author.presence.game
-var channeltopic = message.channel.topic
-var channelcategory = message.channel.parent
-var usernickname = message.member.nickname
-var ng = new Date()
-
-  const ping = new Discord.RichEmbed()
-.setTitle(`NEW BOT MESSAGE`)
-.setColor(`#5e0cf6`)
-.setAuthor(`${client.user.username}`, `${client.user.avatarURL}`)
-    .addField(`BOT MESSAGE:`, `${msgping}ms`)
-.addField(`replying to:`, `${message.author} \n command triggered by user saying "${message.content}"`)
-.setFooter('BUBBALOG', `https://cdn.discordapp.com/avatars/639620711740211231/d98ad4afc8a5fc5323b2bb4d153a59da.webp?size=256`)
-.addField(`
-AUTHORINFO:`, 
-`
-NAME: ${message.author.toString()}
-STATUS: '${message.member.presence.status}'
-${game == null ? " ": `PLAYING: ${game}'`}  
-CREATED AT: ${message.author.createdAt.toLocaleString()}
- (${checkDays(message.author.createdAt)})
-`)
-.addField(`
-CHANNEL:`, 
-`NAME: '${message.channel.name}'
-CATEGORY: '${channelcategory == null ? `none` : `${channelcategory}`}'
-TOPIC: '${channeltopic == null ? `none` : `${channeltopic}`}'
-`)
-.addField(`
-GUILD:`, 
-`name: '${message.guild.name}'
-owner: ${message.guild.owner} (${message.guild.owner.presence.status})
-created at: ${message.guild.createdAt.toLocaleString()} 
-(${checkDays(message.guild.createdAt)})
-members: ${message.guild.memberCount}
-`)
-.setURL(`${message.url}`)
-.setTimestamp()
-.setFooter('BUBBALOG', `https://cdn.discordapp.com/avatars/639620711740211231/d98ad4afc8a5fc5323b2bb4d153a59da.webp?size=256`);
-client.channels.get(`670380179780141057`).send(ping)
-console.log(`\n <${message.createdAt}> - user ${message.author.username}#${message.author.discriminator} issued "b.ping" at "${message.guild}" in channel "${message.channel.name}", this returned ${msgping + " ms"}`)
-});
+      client.commands.get('ping').execute(message);
   } else
 
   if (message.content.startsWith('b.testytest')) {
-    message.channel.send(`testytest complete`)
+    message.channel.snd(`testytest complete`)
+
+
+
+
   } else {
 
 }});
@@ -324,4 +289,4 @@ const vaccinated = [
   "vaccinated and ready!"
 ]
 
-client.login(``);
+client.login(`${t.token}`);
