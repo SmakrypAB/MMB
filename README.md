@@ -1,6 +1,8 @@
 MessageModBot,
 a message/action logger + manual moderation bot
 
+CURRENT VERSION: "MESSAGE-MOD-VERSION-0.0.2"
+
 BOT:
 MessageModBot#1732
 
@@ -19,7 +21,7 @@ FEATURE GOALS:
 
 
 DEV GOALS:
-1. Individual files for each command
+1. Individual files for each command (in progress!)
 2. Clean code
 3. Fail safe features (if Null etc.)
 4. Visualized Errors (embeds on error)
